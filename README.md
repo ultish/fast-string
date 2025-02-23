@@ -55,13 +55,13 @@ It's still slow for first .toString() call
 
 ## Create then toString()
 
-| Type               | Total Time 1 iteration |
-|--------------------|------------------------|
-| String             | 17155792 ns            |
-| FastString         | 22071125 ns            |
-| FastStringRopeLike | 27052125 ns            |
-| Ratio (FS/S)       | 1.29                   |
-| Ratio (FSRL/S)     | 1.58                   |
+| Type               | Total Time 1mil iterations |
+|--------------------|----------------------------|
+| String             | 17155792 ns                |
+| FastString         | 22071125 ns                |
+| FastStringRopeLike | 27052125 ns                |
+| Ratio (FS/S)       | 1.29                       |
+| Ratio (FSRL/S)     | 1.58                       |
 
 ## CharAt (mid)
 
