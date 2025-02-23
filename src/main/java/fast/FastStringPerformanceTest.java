@@ -64,7 +64,7 @@ public class FastStringPerformanceTest {
         List<String> stringList = new ArrayList<>();
         List<FastString> fsList = new ArrayList<>();
         List<FastStringRopeLike> fsrList = new ArrayList<>();
-        int N = 1000; // Number of strings to concatenate
+        int N = 10_000; // Number of strings to concatenate
         byte[][] bytesList = new byte[N][];
         for (int i = 0; i < N; i++) {
             bytesList[i] = ("hello" + i).getBytes(StandardCharsets.UTF_8);

@@ -1,19 +1,64 @@
-Testing String implementations for zero-copy
+Testing String implementations for zero-copy. JDK 22
 
-Construction - String: 17755958 ns, FastString: 9666250 ns, FastStringRopeLike: 9973167 ns, Ratio (FS/S): 0.54, Ratio (
-FSRL/S): 0.56
+## Construction
 
-Length - String: 2138583 ns, FastString: 968833 ns, FastStringRopeLike: 1036500 ns, Ratio (FS/S): 0.45, Ratio (FSRL/S):
-0.48
+| Type               | Total Time 1mil iterations |
+|--------------------|----------------------------|
+| String             | 17755958 ns                |
+| FastString         | 9666250 ns                 |
+| FastStringRopeLike | 9973167 ns                 |
+| Ratio (FS/S)       | 0.54                       |
+| Ratio (FSRL/S)     | 0.56                       |
 
-ToString - String: 1774292 ns, FastString: 16372958 ns, FastStringRopeLike: 25644625 ns, Ratio (FS/S): 9.23, Ratio (
-FSRL/S): 14.45
+## Length
 
-CharAt (mid) - String: 2416041 ns, FastString: 7530291 ns, FastStringRopeLike: 7713375 ns, Ratio (FS/S): 3.12, Ratio (
-FSRL/S): 3.19
+| Type               | Total Time 1mil iterations |
+|--------------------|----------------------------|
+| String             | 2138583 ns                 |
+| FastString         | 968833 ns                  |
+| FastStringRopeLike | 1036500 ns                 |
+| Ratio (FS/S)       | 0.45                       |
+| Ratio (FSRL/S)     | 0.48                       |
 
-Substring - String: 8780375 ns, FastString: 11044291 ns, FastStringRopeLike: 16838625 ns, Ratio (FS/S): 1.26, Ratio (
-FSRL/S): 1.92
+## ToString
 
-Concat - String: 664834 ns, FastString: 1163416 ns, FastStringRopeLike: 211084 ns, Ratio (FS/S): 1.75, Ratio (FSRL/S):
-0.32
+| Type               | Total Time 1mil iterations |
+|--------------------|----------------------------|
+| String             | 1774292 ns                 |
+| FastString         | 16372958 ns                |
+| FastStringRopeLike | 25644625 ns                |
+| Ratio (FS/S)       | 9.23                       |
+| Ratio (FSRL/S)     | 14.45                      |
+
+## CharAt (mid)
+
+| Type               | Total Time 1mil iterations |
+|--------------------|----------------------------|
+| String             | 2416041 ns                 |
+| FastString         | 7530291 ns                 |
+| FastStringRopeLike | 7713375 ns                 |
+| Ratio (FS/S)       | 3.12                       |
+| Ratio (FSRL/S)     | 3.19                       |
+
+## Substring
+
+| Type               | Total Time 1mil iterations |
+|--------------------|----------------------------|
+| String             | 8780375 ns                 |
+| FastString         | 11044291 ns                |
+| FastStringRopeLike | 16838625 ns                |
+| Ratio (FS/S)       | 1.26                       |
+| Ratio (FSRL/S)     | 1.92                       |
+
+## Concat
+
+| Type               | Total Time 10,000 concats |
+|--------------------|---------------------------|
+| String             | 16634750 ns               |
+| FastString         | 82732125 ns               |
+| FastStringRopeLike | 831209 ns                 |
+| Ratio (FS/S)       | 4.97                      |
+| Ratio (FSRL/S)     | 0.05                      |
+
+
+ 
