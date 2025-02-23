@@ -20,7 +20,7 @@ public class FastStringRopeLike implements CharSequence {
         this.node = node;
     }
 
-//    ### Fast Concatenation: O(1)
+    //    ### Fast Concatenation: O(1)
 //    Concatenates this `FastStringRopeLike` with another by creating a `Concat` node.
     public FastStringRopeLike concat(FastStringRopeLike other) {
         return new FastStringRopeLike(new Concat(this.node, other.node));
@@ -39,31 +39,35 @@ public class FastStringRopeLike implements CharSequence {
         return node.charAt(index);
     }
 
-    @Override
-    public CharSequence subSequence(int start, int end) {
-        if (start < 0 || end > node.getCharLength() || start > end) {
-            throw new IndexOutOfBoundsException("Start: " + start + ", End: " + end + ", Length: " + node.getCharLength());
-        }
-        int byteStart = node.findByteIndexOfChar(start);
-        int byteEnd = (end == node.getCharLength()) ? node.getByteLength() : node.findByteIndexOfChar(end);
-        byte[] allBytes = new byte[node.getByteLength()];
-        node.copyBytesTo(allBytes, 0);
-        return new FastStringRopeLike(new Leaf(allBytes, byteStart, byteEnd - byteStart));
-    }
+//    @Override
+//    public CharSequence subSequence(int start, int end) {
+//        if (start < 0 || end > node.getCharLength() || start > end) {
+//            throw new IndexOutOfBoundsException("Start: " + start + ", End: " + end + ", Length: " + node.getCharLength());
+//        }
+//        int byteStart = node.findByteIndexOfChar(start);
+//        int byteEnd = (end == node.getCharLength()) ? node.getByteLength() : node.findByteIndexOfChar(end);
+//        byte[] allBytes = new byte[node.getByteLength()];
+//        node.copyBytesTo(allBytes, 0);
+//        return new FastStringRopeLike(new Leaf(allBytes, byteStart, byteEnd - byteStart));
+//    }
 
-    @Override
-    public String toString() {
-        byte[] allBytes = new byte[node.getByteLength()];
-        node.copyBytesTo(allBytes, 0);
-        return new String(allBytes, StandardCharsets.UTF_8);
-    }
+//    @Override
+//    public String toString() {
+//        byte[] allBytes = new byte[node.getByteLength()];
+//        node.copyBytesTo(allBytes, 0);
+//        return new String(allBytes, StandardCharsets.UTF_8);
+//    }
 
     // Abstract node class for the rope structure
     private static abstract class Node {
         abstract int getByteLength();
+
         abstract int getCharLength();
+
         abstract void copyBytesTo(byte[] dest, int destOffset);
+
         abstract char charAt(int index);
+
         abstract int findByteIndexOfChar(int charIndex);
     }
 
@@ -187,5 +191,34 @@ public class FastStringRopeLike implements CharSequence {
         } else {
             throw new UnsupportedOperationException("4-byte UTF-8 sequences not supported");
         }
+    }
+
+
+    // faster toString
+    private byte[] byteCache;
+    private String strCache;
+
+    private void ensureByteCache() {
+        if (byteCache == null) {
+            byteCache = new byte[node.getByteLength()];
+            node.copyBytesTo(byteCache, 0);
+        }
+    }
+
+    @Override
+    public String toString() {
+        if (strCache == null) {
+            ensureByteCache();
+            strCache = new String(byteCache, StandardCharsets.UTF_8);
+        }
+        return strCache;
+    }
+
+    @Override
+    public CharSequence subSequence(int start, int end) {
+        ensureByteCache();
+        int byteStart = node.findByteIndexOfChar(start);
+        int byteEnd = (end == node.getCharLength()) ? node.getByteLength() : node.findByteIndexOfChar(end);
+        return new FastStringRopeLike(new Leaf(byteCache, byteStart, byteEnd - byteStart));
     }
 }

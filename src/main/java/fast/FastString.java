@@ -3,22 +3,31 @@ package fast;
 import java.nio.charset.StandardCharsets;
 
 public class FastString implements CharSequence {
-    /** The underlying byte array holding the string data. */
+    /**
+     * The underlying byte array holding the string data.
+     */
     private final byte[] data;
 
-    /** Starting offset in the byte array. */
+    /**
+     * Starting offset in the byte array.
+     */
     private final int offset;
 
-    /** Length of the byte segment in bytes. */
+    /**
+     * Length of the byte segment in bytes.
+     */
     private final int byteLength;
 
-    /** Number of characters (not bytes) in the string. */
+    /**
+     * Number of characters (not bytes) in the string.
+     */
     private final int charLength;
 
     /**
      * Constructs a FastString from a byte array segment.
-     * @param data The byte array (not copied).
-     * @param offset Starting position in the array.
+     *
+     * @param data       The byte array (not copied).
+     * @param offset     Starting position in the array.
      * @param byteLength Length of the segment in bytes.
      */
     public FastString(byte[] data, int offset, int byteLength) {
@@ -33,11 +42,13 @@ public class FastString implements CharSequence {
 
     /**
      * Constructs a FastString from an entire byte array.
+     *
      * @param data The byte array (not copied).
      */
     public FastString(byte[] data) {
         this(data, 0, data.length);
     }
+
 
     /**
      * Computes the number of characters in the byte array segment assuming UTF-8 encoding.

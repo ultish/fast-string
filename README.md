@@ -30,6 +30,17 @@ Testing String implementations for zero-copy. JDK 22
 | Ratio (FS/S)       | 9.23                       |
 | Ratio (FSRL/S)     | 14.45                      |
 
+## ToString (FastStringRopeLike modified with cache)
+
+To improve FastStringRopeLike's toString function we introduce a cache for the underlying string
+| Type | Total Time 1mil iterations |
+|--------------------|----------------------------|
+| String | 1995500 ns |
+| FastString | 17632917 ns |
+| FastStringRopeLike | 2160625 ns |
+| Ratio (FS/S)       | 8.84 |
+| Ratio (FSRL/S)     | 1.08 |
+
 ## CharAt (mid)
 
 | Type               | Total Time 1mil iterations |
