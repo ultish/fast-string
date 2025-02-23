@@ -33,7 +33,7 @@ Testing String implementations for zero-copy. JDK 22
 ## ToString (FastStringRopeLike modified with cache)
 
 To improve FastStringRopeLike's toString function we introduce a cache for the underlying string. This only improves the
-1st toString call on the rope-like implementation.
+2nd+ toString call on the rope-like implementation.
 
 | Type               | Total Time 1mil iterations |
 |--------------------|----------------------------|
@@ -62,7 +62,7 @@ It's still slow for first .toString() call
 | FastStringRopeLike | 27052125 ns            |
 | Ratio (FS/S)       | 1.29                   |
 | Ratio (FSRL/S)     | 1.58                   |
- 
+
 ## CharAt (mid)
 
 | Type               | Total Time 1mil iterations |
