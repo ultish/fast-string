@@ -32,15 +32,37 @@ Testing String implementations for zero-copy. JDK 22
 
 ## ToString (FastStringRopeLike modified with cache)
 
-To improve FastStringRopeLike's toString function we introduce a cache for the underlying string
-| Type | Total Time 1mil iterations |
-|--------------------|----------------------------|
-| String | 1995500 ns |
-| FastString | 17632917 ns |
-| FastStringRopeLike | 2160625 ns |
-| Ratio (FS/S)       | 8.84 |
-| Ratio (FSRL/S)     | 1.08 |
+To improve FastStringRopeLike's toString function we introduce a cache for the underlying string. This only improves the
+1st toString call on the rope-like implementation.
 
+| Type               | Total Time 1mil iterations |
+|--------------------|----------------------------|
+| String             | 1995500 ns                 |
+| FastString         | 17632917 ns                |
+| FastStringRopeLike | 2160625 ns                 |
+| Ratio (FS/S)       | 8.84                       |
+| Ratio (FSRL/S)     | 1.08                       |
+
+It's still slow for first .toString() call
+
+| Type               | Total Time 1 iteration |
+|--------------------|------------------------|
+| String             | 333 ns                 |
+| FastString         | 291 ns                 |
+| FastStringRopeLike | 5417 ns                |
+| Ratio (FS/S)       | 0.87                   |
+| Ratio (FSRL/S)     | 16.27                  |
+
+## Create then toString()
+
+| Type               | Total Time 1 iteration |
+|--------------------|------------------------|
+| String             | 17155792 ns            |
+| FastString         | 22071125 ns            |
+| FastStringRopeLike | 27052125 ns            |
+| Ratio (FS/S)       | 1.29                   |
+| Ratio (FSRL/S)     | 1.58                   |
+ 
 ## CharAt (mid)
 
 | Type               | Total Time 1mil iterations |

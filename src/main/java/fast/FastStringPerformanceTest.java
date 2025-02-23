@@ -17,6 +17,7 @@ public class FastStringPerformanceTest {
         testConstruction();
         testLength();
         testToString();
+        testCreateThenToString();
         testCharAt();
         testSubstring();
         testConcat();
@@ -58,6 +59,34 @@ public class FastStringPerformanceTest {
         System.out.printf("ToString - String: %d ns, FastString: %d ns, FastStringRopeLike: %d ns, Ratio (FS/S): %.2f%n, Ratio (FSRL/S): %.2f%n",
                 strToStringTime, fsToStringTime, fsRlToStringTime, (double) fsToStringTime / strToStringTime, (double) fsRlToStringTime / strToStringTime);
     }
+
+    private static void testCreateThenToString() {
+        long startTime = System.nanoTime();
+        for (int i = 0; i < ITERATIONS; i++) {
+            String str = new String(SAMPLE_BYTES, StandardCharsets.UTF_8);
+            String fsString = str.toString();
+        }
+        long strToStringTime = (System.nanoTime() - startTime);
+
+        startTime = System.nanoTime();
+        for (int i = 0; i < ITERATIONS; i++) {
+            FastString fastStr = new FastString(SAMPLE_BYTES);
+            String fsString = fastStr.toString();
+        }
+        long fsToStringTime = (System.nanoTime() - startTime);
+
+
+        startTime = System.nanoTime();
+        for (int i = 0; i < ITERATIONS; i++) {
+            FastStringRopeLike fastStrRopeLike = new FastStringRopeLike(SAMPLE_BYTES);
+            String fsrlString = fastStrRopeLike.toString();
+        }
+        long fsRlToStringTime = (System.nanoTime() - startTime);
+
+        System.out.printf("CreateThenToString - String: %d ns, FastString: %d ns, FastStringRopeLike: %d ns, Ratio (FS/S): %.2f%n, Ratio (FSRL/S): %.2f%n",
+                strToStringTime, fsToStringTime, fsRlToStringTime, (double) fsToStringTime / strToStringTime, (double) fsRlToStringTime / strToStringTime);
+    }
+
 
     private static void testConcat() {
         // Create lists of objects for each implementation

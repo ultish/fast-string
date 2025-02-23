@@ -148,6 +148,23 @@ public class FastStringRopeLike implements CharSequence {
             left.copyBytesTo(dest, destOffset);
             right.copyBytesTo(dest, destOffset + left.getByteLength());
         }
+//        void copyBytesTo(byte[] dest, int destOffset) {
+//            Stack<Node> stack = new Stack<>();
+//            stack.push(this);
+//
+//            while (!stack.isEmpty()) {
+//                Node node = stack.pop();
+//                if (node instanceof Leaf) {
+//                    Leaf leaf = (Leaf) node;
+//                    System.arraycopy(leaf.data, leaf.offset, dest, destOffset, leaf.byteLength);
+//                    destOffset += leaf.byteLength;
+//                } else if (node instanceof Concat) {
+//                    Concat concat = (Concat) node;
+//                    stack.push(concat.right);
+//                    stack.push(concat.left);
+//                }
+//            }
+//        }
 
         @Override
         char charAt(int index) {
